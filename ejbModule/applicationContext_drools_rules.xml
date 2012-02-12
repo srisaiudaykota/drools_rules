@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:drools="http://drools.org/schema/drools-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://drools.org/schema/drools-spring http://drools.org/schema/drools-spring.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<drools:resource-change-scanner id="scanner-setting"
+		interval="5" />
+	<bean id="ruleEngineInitiator" class="org.drools_rules.drools.RuleEngineInitiatorImpl"
+		depends-on="scanner-setting" scope="singleton" />
+
+	<bean id="internalIRuleExecutor" class="org.drools_rules.bean.CommandRuleExecutorImpl"
+		init-method="initRuleEngine" scope="singleton">
+		<property name="ruleEngineInitiator" ref="ruleEngineInitiator"></property>
+	</bean>
+</beans>
